@@ -31,3 +31,54 @@ You need to output 2.
 	<li><code>0 &lt;= s.length &lt;= 3 * 10<sup>4</sup></code></li>
 	<li><code>1 &lt;= g[i], s[j] &lt;= 2<sup>31</sup> - 1</code></li>
 </ul>
+
+<br/>
+
+# Solution
+
+## Intuition
+The goal of this problem is to distribute cookies to children in a way that maximizes the number of content children. To achieve this, it is essential to match each child with a cookie whose size meets or exceeds the child's greed factor. Sorting the arrays representing children's greed factors (`g`) and cookie sizes (`s`) allows for a straightforward traversal to find suitable matches.
+
+## Approach
+The provided solution sorts both the `g` and `s` arrays in ascending order. Then, it iterates through the greed factors, attempting to find a suitable cookie for each child. The `sizeInd` variable keeps track of the current index in the sorted cookie sizes array. The algorithm uses a while loop to find the smallest cookie that satisfies the current child's greed factor.
+
+If a suitable cookie is found, the `contentChildren` count is incremented, and the index is moved to the next cookie size. The process continues until all children are considered or there are no more cookies available.
+
+## Complexity
+- Time complexity: $$O(n \log n)$$
+
+    The dominant factor in the time complexity is the sorting of both the `g` and `s` arrays, which takes $$O(n \log n)$$ time, where $$n$$ is the size of the larger array. The subsequent iteration through the arrays is linear, resulting in a final time complexity of $$O(n \log n)$$. The while loop within the iteration ensures that each cookie is considered at most once.
+
+- Space complexity: $$O(1)$$
+
+    The space complexity is constant since the sorting is performed in-place, and no additional data structures are used. The algorithm uses a constant amount of extra space, making it efficient in terms of space utilization.
+
+## Code
+```cpp
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        int contentChildren = 0;
+
+        if (g.size() == 0 || s.size() == 0)
+            return 0;
+
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+
+        int sizeLen = s.size();
+        int sizeInd = 0;
+
+        for (int child : g) {
+            while (sizeInd < sizeLen && s[sizeInd] < child) {
+                sizeInd++;
+            }
+            if (sizeInd >= sizeLen)
+                return contentChildren;
+            sizeInd++;
+            contentChildren++;
+        }
+        return contentChildren;
+    }
+};
+```
