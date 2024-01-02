@@ -38,3 +38,51 @@ It can be shown that we cannot have less than 3 rows in a valid array.</pre>
 	<li><code>1 &lt;= nums.length &lt;= 200</code></li>
 	<li><code>1 &lt;= nums[i] &lt;= nums.length</code></li>
 </ul>
+
+<br/>
+
+# Solution
+
+## Intuition
+The problem involves creating a 2D array from an input array while satisfying certain conditions. To achieve this, the algorithm utilizes an unordered map (`freq`) to keep track of the frequency of each element in the input array `nums`. By determining the maximum frequency (`maxi`), the algorithm initializes the resulting 2D array with a number of rows equal to `maxi`. The intuition is to then iterate through the elements of `nums` and populate the unordered map `freq` based on their frequency.
+
+This approach ensures that each row in the 2D array will contain distinct integers, as elements with the same value will be grouped together in the map. The algorithm leverages the frequency information to determine the number of rows needed and efficiently populates the resulting 2D array.
+
+Overall, the intuition is to use frequency information to organize the elements into distinct rows in the 2D array, while minimizing the number of rows.
+
+## Approach
+1. Initialize an unordered map `freq` to keep track of the frequency of each element in `nums`.
+2. Iterate through `nums` to count the frequency of each element and determine the maximum frequency `maxi`.
+3. Initialize the resulting 2D array with a number of rows equal to `maxi`.
+4. Iterate through the elements of `nums` and populate the unordered map `freq` based on their frequency.
+5. Populate the resulting 2D array by grouping elements with the same value together in each row according to their frequency.
+
+## Complexity
+- Time complexity:
+  - The loop to count the frequency of elements in `nums` takes $$O(n)$$ time, where $$n$$ is the size of the array.
+  - The loop to populate the unordered map (`freq`) also takes $$O(n)$$ time in the worst case.
+  - Therefore, the overall time complexity is $$O(n)$$.
+- Space complexity:
+  - The space complexity is $$O(n)$$, where $$n$$ is the size of the array. This is due to the unordered map (`freq`) and the resulting 2D array.
+
+## Code
+```cpp
+class Solution {
+public:
+    vector<vector<int>> findMatrix(vector<int>& nums) {
+        unordered_map<int, int> freq;
+        int maxi = 0;
+        for (int num : nums) {
+            freq[num]++;
+            maxi = max(maxi, freq[num]);
+        }
+        vector<vector<int>> result(maxi);
+        for (auto [key, value] : freq) {
+            for (int ind = 0; ind < value; ind++) {
+                result[ind].push_back(key);
+            }
+        }
+        return result;
+    }
+};
+```
