@@ -47,3 +47,56 @@ This is because the 2<sup>nd</sup> row contains security devices, which breaks t
 	<li><code>1 &lt;= m, n &lt;= 500</code></li>
 	<li><code>bank[i][j]</code> is either <code>&#39;0&#39;</code> or <code>&#39;1&#39;</code>.</li>
 </ul>
+
+<br/>
+
+# Solution
+
+### *While there may be more optimal solutions, this is my approach to answering the question at hand.*
+
+---
+
+# Intuition
+The problem involves counting the number of laser beams between security devices in a bank. The algorithm uses a map (`indWithCount`) to store the count of security devices per row. It then iterates through the rows of the bank, counting the number of '1's in each row and updating the map accordingly.
+
+To calculate the total number of laser beams, the algorithm iterates through the map and sums up the product of the count of security devices on the current row (`value`) and the count of security devices on all previous rows. This accounts for the conditions that there should be a laser beam between devices on different rows, and there should be no security devices in the rows between them.
+
+The intuition behind this approach is to leverage the frequency of security devices per row to determine the number of laser beams. By considering each row independently and accumulating the total count, the algorithm efficiently calculates the desired result.
+
+# Approach
+1. Initialize a map `indWithCount` to store the count of security devices per row.
+2. Iterate through the rows of the bank, counting the number of '1's in each row and updating the map accordingly.
+3. Initialize variables `beams` and `prevKey` to calculate the total number of laser beams.
+4. Iterate through the map and sum up the product of the count of security devices on the current row (`value`) and the count of security devices on all previous rows.
+
+# Complexity
+- Time complexity:
+    - The first loop to count the number of security devices per row takes $$O(m \cdot n)$$ time, where `m` is the number of rows and `n` is the number of columns.
+    - The second loop to calculate the total number of laser beams takes $$O(m)$$ time in the worst case.
+    - Therefore, the overall time complexity is $$O(m \cdot n)$$.
+
+- Space complexity:
+    - The space complexity is $$O(m)$$, where `m` is the number of rows. This is due to the map `indWithCount`.
+
+# Code
+```cpp
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        map<int,int> indWithCount; // security device per row
+        int m = bank.size();
+        for(int ind=0; ind<m; ind++)  // o(m*n)
+            for(auto cell: bank[ind])
+                if(cell == '1')
+                    indWithCount[ind]++;
+        int beams = 0, prevKey = 0;
+        for(auto [key, value]: indWithCount) // o(m)
+        {
+            if(key != prevKey)
+                beams += value * indWithCount[prevKey];
+            prevKey = key;
+        }
+        return beams;
+    }
+};
+```
