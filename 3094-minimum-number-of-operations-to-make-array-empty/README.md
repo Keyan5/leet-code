@@ -38,3 +38,51 @@ It can be shown that we cannot make the array empty in less than 4 operations.
 	<li><code>2 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
 	<li><code>1 &lt;= nums[i] &lt;= 10<sup>6</sup></code></li>
 </ul>
+
+<br>
+
+# Soution
+
+# Intuition
+The problem involves finding the minimum number of operations to make the array empty, where two types of operations are allowed: deleting two elements with equal values or deleting three elements with equal values. The algorithm utilizes a frequency map (`freq`) to count the occurrences of each element in the array.
+
+To minimize the number of operations, the algorithm iterates through the frequency map and calculates the number of operations needed for each element. It considers that, except for the number 1, any positive number can be constructed using operations of type 2 and 3. The algorithm increments the count of operations accordingly and returns the total minimum number of operations.
+
+
+# Approach
+1. Initialize a frequency map (`freq`) to count the occurrences of each element in the array.
+2. Iterate through the array and update the frequency map.
+3. Initialize a variable `opCount` to represent the total number of operations needed.
+4. Iterate through the frequency map and calculate the number of operations for each element based on its frequency.
+5. Return the total minimum number of operations or -1 if it is not possible to empty the array.
+
+# Complexity
+- Time complexity: $$O(n)$$
+  - The algorithm iterates through the array once to update the frequency map and once through the frequency map to calculate the number of operations.
+- Space complexity: $$O(n)$$
+  - The space complexity is linear with respect to the size of the array, as it uses the frequency map.
+
+# Code
+```cpp
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        unordered_map<int, int> freq;
+        for (int num : nums)  
+            freq[num]++;
+        
+        int opCount = 0;
+        for (auto [key, value] : freq) {
+            if (value == 1)
+                return -1;
+            else if ((value - 2) % 3 == 0)
+                opCount += (value - 2) / 3 + 1;
+            else if ((value - 4) % 3 == 0)
+                opCount += (value - 4) / 3 + 2;
+            else
+                opCount += value / 3;
+        }
+        return opCount;
+    }
+};
+```
