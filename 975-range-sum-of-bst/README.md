@@ -26,3 +26,43 @@
 	<li><code>1 &lt;= low &lt;= high &lt;= 10<sup>5</sup></code></li>
 	<li>All <code>Node.val</code> are <strong>unique</strong>.</li>
 </ul>
+
+<br/>
+
+# Soltuion
+
+# Intuition
+The problem requires finding the sum of values of nodes in a binary search tree (BST) within a given range [low, high]. The algorithm performs a depth-first traversal of the BST, accumulating the sum of values of nodes that fall within the specified range.
+
+# Approach
+The algorithm follows a recursive depth-first traversal approach. It starts from the root and recursively explores the left and right subtrees. For each node encountered during the traversal, it checks if the node value is within the specified range [low, high]. If so, it adds the node value to the `sum` variable.
+
+The intuition behind this approach is that the BST property allows us to determine which subtree to explore based on the values of the nodes. If the current node value is less than `low`, there is no need to explore the left subtree, and if the current node value is greater than `high`, there is no need to explore the right subtree.
+
+# Complexity
+- Time complexity: $$O(N)$$
+  - The algorithm visits each node once during the depth-first traversal, where N is the number of nodes in the BST.
+- Space complexity: $$O(H)$$, where H is the height of the BST (worst-case scenario for the call stack).
+  - The space complexity is determined by the maximum height of the call stack during the recursive traversal.
+
+# Code
+```cpp
+class Solution {
+public:
+    int sum = 0;
+    
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        if (!root)
+            return 0;
+        
+        int val = root->val;
+        if (val > low)
+            rangeSumBST(root->left, low, high);
+        sum += (val >= low && val <= high) ? val : 0;
+        if (val < high)
+            rangeSumBST(root->right, low, high);
+        
+        return sum;
+    }
+};
+```
