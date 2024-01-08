@@ -16,9 +16,11 @@ public:
         if(!root)
             return 0;
         int val = root->val;
-        rangeSumBST(root->left, low, high);
+        if(val>low)
+            rangeSumBST(root->left, low, high);
         sum += val >= low && val <= high ? val: 0;
-        rangeSumBST(root->right, low, high);
+        if(val<high)
+            rangeSumBST(root->right, low, high);
         return sum;  
     }
 };
