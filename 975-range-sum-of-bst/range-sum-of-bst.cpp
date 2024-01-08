@@ -17,7 +17,7 @@ public:
             return 0;
         int val = root->val;
         rangeSumBST(root->left, low, high);
-        sum += val>=low && val<=high ? val: 0;
+        sum += val >= low && val <= high ? val: 0;
         rangeSumBST(root->right, low, high);
         return sum;  
     }
