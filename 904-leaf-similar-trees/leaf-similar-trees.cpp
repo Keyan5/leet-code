@@ -11,27 +11,19 @@
  */
 class Solution {
 public:
-    queue<int> leaves;
-    bool res = true;
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        inOrder(root1, true);
-        inOrder(root2, false);
-        return res && leaves.empty();
+        stringstream leaves1;
+        stringstream leaves2;
+        inOrder(root1, leaves1);
+        inOrder(root2, leaves2);
+        return leaves1.str() == leaves2.str();
     }
-    void inOrder(TreeNode * root, bool produce) {
-        if(!res || !root)
+    void inOrder(TreeNode * root, stringstream &leaves) {
+        if(!root)
             return;
+        inOrder(root->left, leaves);
         if(!root->left && !root->right)
-        {
-            if(produce)
-                leaves.push(root->val);
-            else if(leaves.front() == root->val)
-                leaves.pop();
-            else
-                res = false;
-            return;
-        }
-        inOrder(root->left, produce);
-        inOrder(root->right, produce);
+            leaves << root->val << " ";
+        inOrder(root->right, leaves);
     }
 };
