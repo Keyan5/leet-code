@@ -37,3 +37,46 @@
 	<li><code>s.length == t.length</code></li>
 	<li><code>s</code> and <code>t</code> consist of lowercase English letters only.</li>
 </ul>
+
+<br/>
+
+# Solution
+
+# Intuition
+The problem asks to find the minimum number of steps required to make two strings, `s` and `t`, anagrams of each other. An anagram of a string is a string that contains the same characters with a different (or the same) ordering. The algorithm uses a frequency array to count the occurrences of characters in both strings and then calculates the minimum number of steps needed to make them anagrams.
+
+# Approach
+The algorithm initializes a variable `res` to zero and a frequency array `freq` of size 26 to store the occurrences of characters. It then iterates through both strings `s` and `t`, incrementing the count for the characters in `s` and decrementing the count for the characters in `t`. After the iteration, it calculates the minimum number of steps needed by iterating through the `freq` array and summing the positive values.
+
+This is because a positive value indicates that the character belongs only to string `s`, and a negative value indicates that the character belongs only to string `t`. The value of 0 indicates that the character is present in both strings with equal frequency, and no steps are needed for such characters.
+
+Value | Belongs To
+:---: | :---:
+Positive | s
+Negative | t
+0 | Both
+
+# Complexity
+- Time complexity: $$O(N)$$, where N is the length of the strings `s` and `t`.
+  - The algorithm iterates through both strings once.
+- Space complexity: $$O(1)$$
+  - The algorithm uses a constant amount of space for the frequency array.
+
+# Code
+```cpp
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        int res = 0;
+        int freq[26] = {0};
+        int len = s.size();
+        for (int i = 0; i < len; i++) {
+            freq[s[i] - 'a']++;
+            freq[t[i] - 'a']--;
+        }
+        for (int val : freq)
+            res += max(0, val);
+        return res;
+    }
+};
+```
