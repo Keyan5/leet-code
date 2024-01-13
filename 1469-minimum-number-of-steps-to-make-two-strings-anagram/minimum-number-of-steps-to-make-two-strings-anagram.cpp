@@ -3,21 +3,14 @@ public:
     int minSteps(string s, string t) {
         int res = 0;
         int freq[26] = {0};
-        for(char c: s)    // o(m)
-            freq[c-'a']++;
-        for(char c: t)    // o(n)
-            freq[c-'a']--;
+        int len = s.size();
+        for(int i=0; i<len; i++)
+        {
+            freq[s[i]-'a']++;
+            freq[t[i]-'a']--;
+        }
         for(int val: freq)
-            if(val>0)
-                res += val;
+            res += max(0, val);
         return res;
     }
 };
-
-auto init = []() 
-{
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return 'c';
-}();
