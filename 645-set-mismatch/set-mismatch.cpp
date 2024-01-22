@@ -1,18 +1,17 @@
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
-        int len = nums.size();
-        vector<int> numsTest(len, 0);
-        vector<int> res;
-        for(int ele: nums)
-            numsTest[ele-1]++;
-        for(int ind=0; ind<len; ind++)
+        int n = nums.size();
+        long x = 0;
+        long y = 0;
+        for(int i=1; i<=n; i++)
         {
-            if(numsTest[ind]==2)
-                res.insert(res.begin(), ind+1);
-            if(!numsTest[ind])
-                res.push_back(ind+1);
+            int ele = nums[i-1];
+            x += ele - i;
+            y += ele*ele - i*i;
         }
-        return res;
+        int missing = (y - x*x)/(2*x);
+        int duplicate = missing + x;
+        return { duplicate, missing };
     }
 };
