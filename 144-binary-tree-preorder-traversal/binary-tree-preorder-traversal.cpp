@@ -11,13 +11,19 @@
  */
 class Solution {
 public:
-    vector<int> res;
     vector<int> preorderTraversal(TreeNode* root) {
-        if(!root)
-            return res;
-        res.push_back(root->val);
-        preorderTraversal(root->left);
-        preorderTraversal(root->right);
+        vector<int> res;
+        // stack<int> visited({false});
+        stack<TreeNode*> stack({root});
+        while(!stack.empty()) {
+            TreeNode* curr = stack.top();
+            stack.pop();
+            if(curr) {
+                res.push_back(curr->val);
+                stack.push(curr->right);
+                stack.push(curr->left);
+            }
+        }
         return res;
     }
 };
