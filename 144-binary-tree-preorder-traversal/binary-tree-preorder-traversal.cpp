@@ -13,7 +13,6 @@ class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int> res;
-        // stack<int> visited({false});
         stack<TreeNode*> stack({root});
         while(!stack.empty()) {
             TreeNode* curr = stack.top();
