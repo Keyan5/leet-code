@@ -1,12 +1,8 @@
 class Solution {
     public int isPrefixOfWord(String sentence, String searchWord) {
-        String[] words = sentence.split("\\s");
-        int prefixHash = searchWord.hashCode();
+        String[] words = sentence.split("\\s+");
         for(int i=0; i<words.length; i++) {
-            if(words[i].length() < searchWord.length())
-                continue;
-            String wordPrefix = words[i].substring(0, searchWord.length());
-            if(wordPrefix.hashCode() == prefixHash)
+            if(words[i].startsWith(searchWord))
                 return i+1;
         }
         return -1;
