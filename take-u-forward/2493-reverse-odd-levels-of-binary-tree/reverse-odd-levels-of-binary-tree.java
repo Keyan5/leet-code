@@ -19,15 +19,14 @@ class Solution {
         List<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while(!queue.isEmpty()) {
+            int len = queue.size();
             if(level%2 == 1) {
-                int size = queue.size();
-                for(int ind=0; ind<size/2; ind++) {
+                for(int ind=0; ind<len/2; ind++) {
                     int temp = queue.get(ind).val;
-                    queue.get(ind).val = queue.get(size-ind-1).val;
-                    queue.get(size-ind-1).val = temp;
+                    queue.get(ind).val = queue.get(len-ind-1).val;
+                    queue.get(len-ind-1).val = temp;
                 }
             }
-            int len = queue.size();
             while(len-->0) {
                 TreeNode head = queue.remove(0);
                 if(head.left != null) {     // perfect binary tree
