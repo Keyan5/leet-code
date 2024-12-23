@@ -14,42 +14,32 @@
  * }
  */
 class Solution {
+    final int SHIFT = 20;
+    final int MASK = 0xFFFFF;
     public int minimumOperations(TreeNode root) {
-        int swapCount = 0;
+        int swaps = 0;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while(!queue.isEmpty()) {
             int len = queue.size();
-            int[] currentLevelElements = new int[len];
+            long[] nodes = new long[len];
             for(int ind=0; ind<len; ind++) {
                 TreeNode node = queue.poll();
-                currentLevelElements[ind] = node.val;
+                nodes[ind] = ((long) node.val << SHIFT) + ind;
                 if(node.left != null)
                     queue.add(node.left);
                 if(node.right != null)
                     queue.add(node.right);
             }
-            swapCount += calculateSwapCount(currentLevelElements, len);
-        }
-        return swapCount;
-    }
-
-    public int calculateSwapCount(int[] original, int len) {
-        int swaps = 0;
-        int[] target = original.clone();
-        Arrays.sort(original);
-
-        HashMap<Integer, Integer> pos = new HashMap<>();
-        for(int ind=0; ind<len; ind++)
-            pos.put(original[ind], ind);
-
-        for(int ind=0; ind<len; ind++) {
-            if(original[ind] != target[ind]) {
-                swaps++;
-
-                int currPos = pos.get(target[ind]);
-                pos.put(original[ind], currPos);
-                original[currPos] = original[ind];
+            Arrays.sort(nodes);
+            for(int ind=0; ind<len; ind++) {
+                int origPos = (int) (nodes[ind] & MASK);
+                if(origPos != ind) {
+                    swaps++;
+                    long temp = nodes[ind];
+                    nodes[ind--] = nodes[origPos];
+                    nodes[origPos] = temp;
+                }
             }
         }
         return swaps;
