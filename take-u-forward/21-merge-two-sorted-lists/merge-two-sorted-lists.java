@@ -23,12 +23,7 @@ class Solution {
             }
             itr = itr.next;
         }
-        ListNode rem_list = list1 == null ? list2 : list1;
-        while(rem_list != null) {
-            itr.next = rem_list;
-            rem_list = rem_list.next;
-            itr = itr.next;
-        }
+        itr.next = list1 == null ? list2 : list1;
         return head.next;
     }
 }
