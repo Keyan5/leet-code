@@ -26,8 +26,9 @@ class Solution {
         if(currNode == null)
             return;
         if(result.size() == level)
-            result.add(Integer.MIN_VALUE);
-        result.set(level, Math.max(currNode.val, result.get(level)));
+            result.add(currNode.val);
+        else
+            result.set(level, Math.max(currNode.val, result.get(level)));
         dfs(currNode.left, level+1);
         dfs(currNode.right, level+1);
     }
