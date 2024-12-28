@@ -13,24 +13,20 @@ class Solution {
         int carry = 0;
         ListNode result = new ListNode();
         ListNode itr = result;
-        while(l1 != null && l2 != null) {
-            int total = l1.val + l2.val + carry;
+        while(l1 != null || l2 != null || carry == 1) {
+            int total = carry;
+            if(l1 != null) {
+                total += l1.val;
+                l1 = l1.next;
+            }
+            if(l2 != null) {
+                total += l2.val;
+                l2 = l2.next;
+            }
             carry = total/10;
             itr.next = new ListNode(total%10);
-            l1 = l1.next;
-            l2 = l2.next;
             itr = itr.next;
         }
-        ListNode unprocessedList = l1 != null ? l1 : l2;
-        while(unprocessedList != null) {
-            int total = unprocessedList.val + carry;
-            carry = total/10;
-            itr.next = new ListNode(total%10);
-            unprocessedList = unprocessedList.next;
-            itr = itr.next;
-        }
-        if(carry == 1)
-            itr.next = new ListNode(1);
         return result.next;
     }
 }
