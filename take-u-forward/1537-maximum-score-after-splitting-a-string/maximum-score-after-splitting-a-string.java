@@ -1,15 +1,15 @@
 class Solution {
     public int maxScore(String s) {
-        int zeros = 0, ones = 0, max = 0;
-        for(int ind = 0; ind < s.length(); ind++)
-            ones += s.charAt(ind) == '1' ? 1 : 0;
+        int zeros = 0, ones = 0, best = Integer.MIN_VALUE;
         for(int ind = 0; ind < s.length()-1; ind++) {
             if(s.charAt(ind) == '0')
-                zeros += 1;
+                zeros++;
             else
-                ones -= 1;
-            max = Math.max(zeros+ones, max);
+                ones++;
+            best = Math.max(zeros-ones, best);
         }
-        return max;
+        if(s.charAt(s.length() - 1) == '1')
+            ones++;
+        return ones + best;
     }
 }
