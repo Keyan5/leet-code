@@ -13,10 +13,14 @@ class Solution {
         for(int ind=0; ind<26; ind++) {
             if(minIndices[ind] == -1) 
                 continue;
-            Set<Character> uniqueCharsInBetween = new HashSet<>();
-            for(int j=minIndices[ind]+1; j<maxIndices[ind]; j++)
-                uniqueCharsInBetween.add(s.charAt(j));
-            count += uniqueCharsInBetween.size();
+            boolean[] isPresent = new boolean[26];
+            for(int j=minIndices[ind]+1; j<maxIndices[ind]; j++) {
+                int charPos = s.charAt(j) - 97;
+                if(!isPresent[charPos]) {
+                    isPresent[charPos] = true;
+                    count++;
+                }
+            }
         }
         return count;
     }
