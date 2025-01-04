@@ -11,6 +11,8 @@ class Solution {
         }
         int count = 0;
         for(int ind=0; ind<26; ind++) {
+            if(minIndices[ind] == -1) 
+                continue;
             Set<Character> uniqueCharsInBetween = new HashSet<>();
             for(int j=minIndices[ind]+1; j<maxIndices[ind]; j++)
                 uniqueCharsInBetween.add(s.charAt(j));
