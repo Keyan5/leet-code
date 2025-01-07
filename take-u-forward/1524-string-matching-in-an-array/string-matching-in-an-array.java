@@ -1,12 +1,14 @@
 class Solution {
     public List<String> stringMatching(String[] words) {
-        Set<String> result = new HashSet<>();
+        List<String> result = new ArrayList<>();
         for(int i=0; i<words.length; i++) {
             for(int j=0; j<words.length; j++) {
-                if(i != j && words[i].indexOf(words[j]) != -1)
-                    result.add(words[j]);
+                if(i != j && words[j].indexOf(words[i]) != -1) {
+                    result.add(words[i]);
+                    break;
+                }
             }
         }
-        return new ArrayList<String>(result);
+        return result;
     }
 }
