@@ -3,8 +3,8 @@ class Solution {
         if(s.length() < k)
             return false;
         int oddOccurence = 0;
-        for(int ind=0; ind<s.length(); ind++)
-            oddOccurence ^= 1 << s.charAt(ind)-'a';
+        for(char c: s.toCharArray())
+            oddOccurence ^= 1 << c-'a';
         return Integer.bitCount(oddOccurence) <= k;
     }
 }
