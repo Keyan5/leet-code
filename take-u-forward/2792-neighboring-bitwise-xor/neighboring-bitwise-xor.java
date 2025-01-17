@@ -1,5 +1,8 @@
 class Solution {
     public boolean doesValidArrayExist(int[] derived) {
-        return Arrays.stream(derived).sum() % 2 == 0;
+        int res = 0;
+        for(int bit: derived)
+            res ^= bit;
+        return res == 0;
     }
 }
