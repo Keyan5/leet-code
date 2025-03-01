@@ -7,14 +7,12 @@ class Solution {
                 nums[ind+1] = 0;         
             }
         }
-        int pos = 0, zeros = 0;
+        int pos = 0;
         for(int ind=0; ind<len; ind++) {
             if(nums[ind]!=0)
-                nums[pos++] = nums[ind]; 
-            else 
-                zeros++;
+                nums[pos++] = nums[ind];
         }
-        for(int ind=len-zeros; ind<len; ind++)
+        for(int ind=pos; ind<len; ind++)
             nums[ind] = 0;
         return nums;
     }
