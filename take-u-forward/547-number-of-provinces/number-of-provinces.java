@@ -3,9 +3,8 @@ class Solution {
     public int findCircleNum(int[][] isConnected) {
         boolean[] visited = new boolean[isConnected.length];
         int count = 0;
-        for(int node=0; node<isConnected.length; node++) {
+        for(int node=0; node<isConnected.length; node++)
             count += DFS(isConnected, visited, node);
-        }
         return count;
     }
 
