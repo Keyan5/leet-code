@@ -9,7 +9,6 @@ class Solution {
         if(carry != 0)
         {
             int res[] = new int[digits.length + 1];
-            System.arraycopy(digits, 0, res, 1, digits.length);
             res[0] = 1;
             return res;
         }
