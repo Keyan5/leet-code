@@ -4,7 +4,7 @@ class Solution {
         for(int ind=0; ind<nums.length; ind++) {
             int currentFreq = freq.getOrDefault(nums[ind], 0) + 1;
             freq.put(nums[ind], currentFreq);
-            if(currentFreq == nums.length/2) {
+            if(currentFreq > 1) {
                 return nums[ind];
             }
         }
