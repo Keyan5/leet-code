@@ -10,13 +10,7 @@ class Solution {
                 max++;
                 res.add(new ArrayList<Integer>());
             }
-        }
-        for(int ind=0; ind < freq.length ; ind++)
-        {
-            for(int jind=0; jind < freq[ind]; jind++)
-            {
-                res.get(jind).add(ind);
-            }
+            res.get(freq[num]-1).add(num);
         }
         return res;
     }
